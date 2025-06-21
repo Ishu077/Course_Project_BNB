@@ -32,7 +32,7 @@ const MONGO_URL=process.env.ATLASDB_URL; //for atlas db
 const sessionOptions={
     secret:process.env.SECRET, //secret key to sign the session ID cookie
     resave:false,
-    saveUnitialized:true,
+    saveUninitialized:true, // fixed typo here
     cookie:{
         expires: Date.now()+7*24*60*60*1000,  //expire after 7 days
         maxAge: 7*24*60*60*1000,
