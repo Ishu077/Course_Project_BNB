@@ -1,0 +1,129 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanderlust</title>
+</head> -->
+<% layout("/layouts/boilerplates")%>  <!--done by ejs mate-->
+<script>
+    // since the map.js cannot access the environment variables directly, we need to pass them from the server-side to the client-side.
+    // This is done by embedding them in the script tag.
+    const mapToken ="<%=process.env.MAP_TOKEN%>"; // Ensure you have set this in your environment variables
+    //same goes for coordinates as they are not available in the map.js file directly.
+    // We will use the coordinates from the list object passed to this template.
+    const list =<%-JSON.stringify(list)%>;// Ensure these list are set correctly in your list object
+</script>
+
+<div class="row mt-3">
+    <div class="col-8 offset-3">
+        <!-- <body> -->
+            <h3><%=list.title%></h3>
+    </div>
+
+
+            <div class="card col-6 offset-3 show-card listing-card">
+                <img src="<%=list.image.url%>" class="card-img-top show-img" alt="listing_image">
+                <div class="card-body">
+                    <p class="card-text">Owned By:<i><%=list.owner.username%></i></p>
+                    <p class="card-text"><i><%=list.description%></i></p>
+                    <p class="card-text"><i> &#8377;<%=list.price.toLocaleString("en-IN")%></i></p>
+                    <p class="card-text"><i><%=list.location%></i></p>
+                    <p class="card-text"><i><%=list.country%></i></p>
+                </div>
+            </div>
+
+
+            <!-- here we need to make the listing details into a card also which is done in above card! -->
+            <!-- <ul>
+                <li><%=list.title%></li>
+                <li><%=list.description%></li>
+                <li> &#8377;<%=list.price.toLocaleString("en-IN")%></li>
+                <li><%=list.location%></li>
+                <li><%=list.country%></li>
+                
+            </ul> -->
+
+            <%if(curruser && list.owner._id.equals(curruser._id)){%>  
+            <div class="btns">
+                <a href="/listings/<%=list._id%>/edit" class="btn btn-dark col-1 offset-3 edit-btn">Edit</a>
+
+                <form action="/listings/<%=list._id%>?_method=delete" method="post">
+                    <button class="btn btn-dark offset-5">Delete</button>
+                </form>
+            </div>
+            <%}%>
+            
+             
+        <div class="col-8 offset-3 mb-3">
+            
+            <%if(curruser){%> 
+            <hr>
+            <h1>Leave a Review</h1>
+            <form action="/listings/<%=list._id%>/reviews" method="post" novalidate class="needs-validation">
+                <!-- <div class="mb-3 mt-3">
+                    <label for="rating" class="form-label">Rating</label>
+                    <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range">
+                </div> -->
+                <div class="mb-3 mt-3">
+                    <label for="rating" class="form-label">Rating</label>
+                <fieldset class="starability-slot">
+                    <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." />
+                    <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                    <label for="first-rate1" title="Terrible">1 star</label>
+                    <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                    <label for="first-rate2" title="Not good">2 stars</label>
+                    <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                    <label for="first-rate3" title="Average">3 stars</label>
+                    <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                    <label for="first-rate4" title="Very good">4 stars</label>
+                    <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                    <label for="first-rate5" title="Amazing">5 stars</label>
+                  </fieldset>
+                  </div>
+                <div class="mb-3 mt-3">
+                    <label for="comment" class="form-label">Comments</label>
+                    <textarea name="review[comment]" id="comment" cols="38" rows="6" class="form-control" required></textarea>
+                    <div class="invalid-feedback">
+                        Please Enter a comment for review!
+                    </div>
+                </div >
+                <button class="btn btn-outline-dark ">Submit</button>
+            </form>
+            <%}%>
+            <hr>
+            
+            <% if(list.reviews.length>0){%>
+            <div class="row">
+                <p><b>All Reviews</b></p>
+                <% for(r of list.reviews){ %>
+                    <div class="card col-5 ms-3 mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">@<%=r.author.username%></h5>
+                            <p class="starability-result card-text" data-rating="3">
+                                <%=r.rating%>
+                              </p>
+                            <p class="card-text"><%= r.comment%></p>
+                            
+                        </div>
+                        <form class="mb-3" method="post" action="/listings/<%=list._id%>/reviews/<%=r._id%>?_method=delete">
+                            <button class="btn btn-sm btn-dark">Delete</button>
+                        </form>
+                    </div>
+                <%}%>
+            </div>
+        <%}%>
+           
+            
+
+        </div>
+        <!-- </body> -->
+         <div class="col-8 offset-3 mb-3">
+                <h3>Where you'll be</h3>
+                <div id="map"></div>
+        </div>
+    
+</div>
+
+<script src="/js/map.js"></script>
+<!-- </html> -->

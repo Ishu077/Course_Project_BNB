@@ -1,0 +1,81 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanderlust</title>
+</head> -->
+<% layout("/layouts/boilerplates")%>  <!--done by ejs mate-->
+<body>
+    <div class="row mt-3">
+        <div class="col-8 offset-2">
+            <h3>Edit your Listing</h3>
+            <form  method="POST" action="/listings/<%=l._id%>?_method=put" novalidate class="needs-validation" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" name="list[title]" value="<%=l.title%>" class="form-control" required>
+                    <div class="valid-feedback">  <!--for validation-->
+                        Title Looks good!
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="description" class="form-label">description</label>
+                    <textarea name="list[description]" id="" class="form-control" required><%= l.description %></textarea>
+                    <div class="invalid-feedback">  <!--shoing message when invalid entered text or empty-->
+                        Enter a short description
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    Original Listing Image <br>
+                    <img src="<%= originalImageUrl%>" alt="">
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label for="image" class="form-label">Image link</label>
+                    <input
+                      name="list[image]" type="file" class="form-control" 
+                    />
+
+                    <div class="invalid-feedback">  <!--shoing message when invalid entered text or empty-->
+                        Enter a valid Link
+                    </div>
+                </div>
+            
+                <div class="row">
+                    <div class="mb-3 col-md-4">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="number" name="list[price]" value="<%=l.price%>" class="form-control" required>
+                        <div class="invalid-feedback">  <!--shoing message when invalid entered text or empty-->
+                            Enter valid price
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3 col-md-8">
+                        <label for="country" class="form-label">Country</label>
+                        <input type="text" name="list[country]" value="<%=l.country%>" class="form-control" required>
+                        <div class="invalid-feedback">  <!--shoing message when invalid entered text or empty-->
+                            Country name should be valid
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="location" class="form-label">Location</label>
+                    <input type="text" name="list[location]" value="<%=l.location%>" class="form-control" required>
+                    <div class="invalid-feedback">  <!--shoing message when invalid entered text or empty-->
+                        Location should be valid
+                    </div>
+                </div>
+                
+                <br><br>
+                <button class="btn btn-dark edit-btn mt-3">Edit</button>
+                <br><br>
+            </form>
+        </div>
+    </div>
+</body>
+<!-- </html> -->

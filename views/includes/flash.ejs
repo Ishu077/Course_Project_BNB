@@ -1,0 +1,16 @@
+<!--for success flash message whne you delete/update/add-->
+<%if(success && success.length){%>  <!-- why lwngth condn? coz successMsg is an empty array!!-->
+    <div class="alert alert-success alert-dismissible fade show col-6 offset-3" role="alert">
+        <%=success%>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    
+<%}%>
+<!--for error(faliure to find the deleted listing/updates the deleted listing) flash message-->
+<%if(error && error.length){%>  <!-- why lwngth condn? coz successMsg is an empty array!!-->
+    <div class="alert alert-danger alert-dismissible fade show col-6 offset-3" role="alert">
+        <%=error%>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    
+<%}%>

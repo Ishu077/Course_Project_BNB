@@ -1,0 +1,116 @@
+body{
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+    display: flex;
+    flex-direction: column;
+    min-height : 100vh;
+}
+
+.container{ /*the div block in ehich whole body is embedded- refer to boillerplate.ejs*/
+    flex:1;
+}
+.navbar{
+    height: 5rem;
+    background-color: white;
+}
+.fa-compass{ /* for the icon, this is the icon class*/
+    color: #fe424d;
+    font-size: 2rem;
+}
+.nav-link{
+    color:#222222 !important; /* here !important is used so that our styling overrides the sy=tyling done by the bootstrap on the link of navbar!*/
+
+}
+/* footer styling */
+
+.f-info-links a{
+    text-decoration: none;
+    color:#222222;
+}
+.f-info-links a:hover{
+    text-decoration: underline;
+}
+.f-info{
+    height: 8rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* align-content: center; */
+    align-items: space-evenly;
+    background-color:#ebebeb ;
+    text-align: center;
+}
+.f-info-links, .f-socials, .f-info-brand{
+    width: 100%;
+    /* vertical-align: middle; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.f-socials i{
+    margin-right: 1rem;
+    font-size: 1.2rem;
+    
+}
+
+/* cards styling  which is used in index.ejs*/
+.listing-card{
+    border: none !important;
+    margin-bottom: 2rem;
+}
+
+.card-img-top{
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+.card-body{
+    padding: 0 !important;
+
+}
+.card-text p{
+    font-weight: 400 !important;
+}
+.listing-link{
+    text-decoration: none;
+}
+
+/* card effect */
+.card-img-overlay{
+    opacity: 0;
+}
+.card-img-overlay:hover{
+    opacity: 0.2;
+    background-color: white; /*Co of opacity it will not the make the background completely white*/
+}
+
+/* new.ejs form styling */
+.add-btn{
+    background-color: #fe424d !important;
+    border:none !important;
+}
+
+/* edit.ejs form styling*/
+.edit-btn{
+    background-color: #fe424d !important;
+    border:none !important;
+}
+
+/* show.ejs styling */
+.show-img{
+    height: 30vh;
+}
+.btns{
+    display: flex;
+}
+.show-card{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+/*Map styling*/
+#map {
+    height: 400px;
+    width: 80vh;
+    
+}

@@ -1,0 +1,73 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanderlust</title>
+</head> -->
+<% layout("/layouts/boilerplates")%>  <!--done by ejs mate-->
+<body>
+    <div class="row mt-3">
+        <div class="col-8 offset-2" >
+            <br><br>
+        <h3>Create A New Listing</h3>
+        <form action="/listings" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" name="list[title]" placeholder="Add a catchy title Title" class="form-control" required>
+            </div>
+            <div class="valid-feedback">  <!--for validation-->
+                Title Looks good!
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea name="list[description]" class="form-control" required>Enter the description</textarea>
+
+                <div class="invalid-feedback">  <!--shoing message when invalid entered text or empty-->
+                    Enter a short description
+                </div>
+            </div>
+        
+            <!-- <div class="mb-3">
+                <label for="image" class="form-label">Image Link</label>
+                <input type="text" name="list[image]" class="form-control" placeholder="Enter image link" >
+            </div> -->
+            <div class="mb-3">
+                <label for="image" class="form-label">Upload Image</label>
+                <input type="file" name="list[image]" class="form-control" >
+                required
+            </div>
+            <div class="row">
+                <div class="mb-3 col-md-4">  <!--jab tak medium h tab tak 4:8 ka ration rhe price and location field me then it changes to single line me individually when becomes smaller!-->
+                    <label for="price" class="form-label">Price</label>
+                    <input  type="number" name="list[price]"  class="form-control" placeholder="Enter Sample price" required>
+                    <div class="invalid-feedback">  <!--shoing message when invalid entered text or empty-->
+                        Enter valid price
+                    </div>
+                </div>
+    
+                <div class="mb-3 col-md-8" >
+                    <label for="country" class="form-label">Country</label>
+                    <input type="text" name="list[country]" class="form-control" placeholder="Enter Country" required>
+                    <div class="invalid-feedback">  <!--shoing message when invalid entered text or empty-->
+                        Country name should be valid
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="location" class="form-label">location</label>
+                <input type="text" name="list[location]" class="form-control" placeholder="Enter location" required>
+                <div class="invalid-feedback">  <!--shoing message when invalid entered text or empty-->
+                    Location should be valid
+                </div>
+            </div>
+            <br>
+            <button class="btn btn-dark add-btn mt-3">Add</button>
+            <br><br>
+        </form>
+        </div>
+    </div>
+    
+</body>
+<!-- </html> -->
