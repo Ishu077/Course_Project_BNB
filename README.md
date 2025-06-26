@@ -48,20 +48,7 @@ WanderLust is a full-stack web application for booking bed-and-breakfast stays, 
 
 ---
 
-## 📁 Project Structure
-
-Course_Project_BNB/
-├── models/ # Mongoose schemas
-├── routes/ # Express route definitions
-├── controllers/ # Business logic
-├── views/ # EJS templates
-├── public/ # Static assets (CSS, JS, images)
-├── utils/ # Utility functions
-├── middleware.js # Auth & validation middleware
-├── cloudConfig.js # Cloudinary configuration
-├── app.js # Main Express app
-├── .env # Environment variables
-└── package.json # Project metadata and dependencies
+<pre lang="markdown"> ## 📁 Project Structure ``` Course_Project_BNB/ ├── models/ # Mongoose schemas ├── routes/ # Express route definitions ├── controllers/ # Business logic ├── views/ # EJS templates ├── public/ # Static assets (CSS, JS, images) ├── utils/ # Utility functions ├── middleware.js # Auth & validation middleware ├── cloudConfig.js # Cloudinary configuration ├── app.js # Main Express app ├── .env # Environment variables └── package.json # Project metadata and dependencies ``` </pre>
 
 
 ---
