@@ -6,7 +6,7 @@ WanderLust is a full-stack web application for booking bed-and-breakfast stays, 
 
 ## ✅ Live Demo
 
-🌍 [Explore WanderLust](https://course-project-bnb.onrender.com/listings)
+🌍 [Explore Book Your BnB](https://course-project-bnb.onrender.com/listings)
 
 ---
 
@@ -45,61 +45,6 @@ WanderLust is a full-stack web application for booking bed-and-breakfast stays, 
 - Multer for file uploads
 - Cloudinary for image hosting
 - Mapbox for map integration
-
----
-
-## 📁 File Structure
-
-The project is organized as follows:
-/
-├── models/                         # Mongoose schemas
-│   ├── user.js                     # User schema & methods
-│   ├── bnb.js                      # BnB listing schema
-│   └── review.js                   # Review & rating schema
-├── routes/                         # Express route definitions
-│   ├── index.js                    # Home & catch-all routes
-│   ├── listings.js                 # BnB listing CRUD routes
-│   ├── users.js                    # Auth & user-profile routes
-│   └── reviews.js                  # Review posting routes
-├── controllers/                    # Business logic & route handlers
-│   ├── listingsController.js       
-│   ├── usersController.js          
-│   └── reviewsController.js        
-├── views/                          # EJS templates
-│   ├── layouts/                    
-│   │   └── boilerplate.ejs         # Base HTML layout
-│   ├── listings/                   
-│   │   ├── index.ejs               # All listings page
-│   │   ├── show.ejs                # Single listing detail
-│   │   ├── new.ejs                 # Create listing form
-│   │   └── edit.ejs                # Edit listing form
-│   ├── users/                      
-│   │   ├── login.ejs               
-│   │   └── register.ejs            
-│   ├── partials/                   
-│   │   ├── header.ejs              
-│   │   ├── footer.ejs              
-│   │   └── flash.ejs               # Flash message partial
-│   └── reviews/                    
-│       └── _review.ejs             # Single review partial
-├── public/                         # Static assets
-│   ├── css/                        
-│   │   └── main.css                
-│   ├── js/                         
-│   │   └── client.js               
-│   └── images/                     
-├── uploads/                        # Local upload temp storage
-├── utils/                          # Helper functions & middleware
-│   ├── validateListing.js          # Joi schema validations
-│   └── catchAsync.js               # Async error wrapper
-├── middleware.js                   # Authentication & authorization
-├── cloudConfig.js                  # Cloudinary setup
-├── app.js                          # Main Express application
-├── .env                            # Environment variables
-├── .gitignore                      # Files & folders to ignore in Git
-├── package.json                    # Project metadata & dependencies
-└── README.md                       # Project overview & setup instructions
-
 
 ---
 
