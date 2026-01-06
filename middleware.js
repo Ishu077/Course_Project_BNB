@@ -6,7 +6,7 @@ module.exports.isLoggedIn=(req,res,next)=>{
     if(!req.isAuthenticated()){  //checking whether the user is logged in or not!
         //redirect url save
         req.session.redirectUrl=req.originalUrl;
-        req.flash("error","you must be logged in to create a listing");
+        req.flash("error","you must be logged in to create a listing/give or delete a listing");
         return res.redirect("/login");  //here return is necessary o/w it will call next and other middleware will execute nd they may give error it the user is not logged in !
     }
     next();

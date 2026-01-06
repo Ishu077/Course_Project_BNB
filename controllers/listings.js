@@ -17,58 +17,32 @@ module.exports.renderAddList=(req,res)=>{
 
     res.render("listings/new.ejs");
 };
-module.exports.addList=async (req,res,next)=>{
-  //map box geocoding to get the coordinates of the location
-  let response =await geocodingClient.forwardGeocode({
-    query: req.body.list.location, //location from the body
+module.exports.addList = async (req, res, next) => {
+  let response = await geocodingClient.forwardGeocode({
+    query: req.body.list.location,
     limit: 1,
-  }).send()
+  }).send();
 
-  // console.log(response.body.features[0].geometry.coordinates); //coordinates of the location
-
-
-  let list=req.body.list; //another way to retrieve data from the body
-    if(req.file){  //if the file is not uploaded then go for default, will not enter into this condn!
-      let URL=req.file.path;  //for storing the cloud link to the mongodb
-      let fileName=req.file.filename;
-      // console.log(url,"..",filename);  //working fine!
-      list.image = {
-        filename: fileName, // Placeholder for filename, you can modify this logic
-        url: URL,
-      };
-    }
-
-    // try{
-      // let{title,description,image,price,country,location}=req.body;
-
-      //***maing the below code a function which can be used in every route to validate!!*** */
-      // let result=listingSchema.validate(req.body);  //server side validation of individual fields of the list therse fore 
-      // console.log(result);                         // I have commented the below if condn to throw error when the list is empty as it will be taken care by joi !
-      // //here joi is detecting and identifying the error but not throwing them!!
-      // if(result.error){  //if the result contains the error attribute.ie a validation error has occured
-      //   throw new ExpressError(400,result.error.details[0].message);
-      // }
-
-      // console.log(list);
-      // if(!list){  //if the list is empty, i.e. no data is sent!
-      //   throw new ExpressError(400,"send valid data for listing");
-      // }
-
-      if(list.image==''){  //to make the default work!
-          delete list.image;
-      }
-      let newListing=new listing(list);
-      newListing.owner=req.user._id;
-
-      newListing.geometry=response.body.features[0].geometry; //setting the geometry of the listing to the coordinates of the location
-      console.log(newListing);
-
-      await newListing.save();
-      req.flash("success","New Listing Created!");
-      res.redirect("/listings");
-    // }catch(err){
-    //   next(err);
-    // }
+  let list = req.body.list;
+  
+  // Handle image
+  if (req.file) {
+    console.log(req.file);
+    list.image = {
+      filename: req.file.filename,
+      url: req.file.path,
+    };
+  } else if (list.image === '') {
+    delete list.image; // Use default from schema
+  }
+  console.log(list);
+  let newListing = new listing(list);
+  newListing.owner = req.user._id;
+  newListing.geometry = response.body.features[0].geometry;
+  console.log(newListing);
+  await newListing.save();
+  req.flash("success", "New Listing Created!");
+  res.redirect("/listings");
 };
 module.exports.renderShowList=async (req,res)=>{
     let {id}=req.params;
@@ -103,85 +77,41 @@ module.exports.renderEditList=async (req,res)=>{
     res.render("listings/edit.ejs",{l:list,originalImageUrl});
 };
 
-module.exports.editList=async (req, res) => {
-    let { id } = req.params;
-    let list = req.body.list;
-    // if(!list){  //if the list is empty, i.e. no data is sent!
-    //   throw new ExpressError(400,"send valid data for listing");
-    // }
+module.exports.editList = async (req, res) => {
+  let { id } = req.params;
+  let list = req.body.list;
 
-    // console.log(list); 
+  // Prepare the update object
+  let updateData = {
+    title: list.title,
+    description: list.description,
+    price: list.price,
+    location: list.location,
+    country: list.country,
+  };
 
-    if(req.file){  //if the file is not uploaded then go for default, will not enter into this condn!
-      let URL=req.file.path;  //for storing the cloud link to the mongodb
-      let fileName=req.file.filename;
-      // console.log(url,"..",filename);  //working fine!
-      list.image = {
-        filename: fileName, // Placeholder for filename, you can modify this logic
-        url: URL,
-      };
-      await listing.findByIdAndUpdate(
-        { _id: id },
-        {
-          title: list.title,
-          description: list.description,
-          image: list.image, // Correctly formatted image object
-          price: list.price,
-          location: list.location,
-          country: list.country,
-          reviews: list.reviews,
-          owner: req.user._id,
-        }
-      );
-    }
+  // Handle image updates
+  if (req.file) {
+    // New file uploaded
+    updateData.image = {
+      filename: req.file.filename,
+      url: req.file.path,
+    };
+  } else if (list.image === '') {
+    // Empty image field - delete to use default
+    updateData.image = undefined;
+  }
+  // If neither condition is true, don't update the image field (keep existing)
 
-    // Check if image is a string, and if so, convert it into the proper object structure
-    if(list.image==''){
-        delete list.image;
-        await listing.findByIdAndUpdate(
-            { _id: id },
-            {
-              title: list.title,
-              description: list.description,
-            //   image: list.image, // Correctly formatted image object
-              price: list.price,
-              location: list.location,
-              country: list.country,
-              reviews: list.reviews,
-              owner: req.user._id,
-            }
-          );
-    }
-    // else if (typeof list.image === 'string') {
-    //   let URL=req.file.path;  //for storing the cloud link to the mongodb
-    //   let fileName=req.file.filename;
-    //   list.image = {
-    //     filename: 'listingimage', // Placeholder for filename, you can modify this logic
-    //     url: list.image,
-    //   };
-    //   await listing.findByIdAndUpdate(
-    //     { _id: id },
-    //     {
-    //       title: list.title,
-    //       description: list.description,
-    //       image: list.image, // Correctly formatted image object
-    //       price: list.price,
-    //       location: list.location,
-    //       country: list.country,
-    //       reviews: list.reviews,
-    //       owner: req.user._id,
-    //     }
-    //   );
-    // }
-    
-  
-    console.log(list);
-  
-    
-    const updatedlist=await listing.findById(id);
-    console.log(updatedlist);
-    req.flash("success","Listing Updated!");
-    res.redirect(`/listings/${id}`);
+  // Single update call
+  await listing.findByIdAndUpdate(
+    { _id: id },
+    updateData,
+    { new: true }
+  );
+
+  req.flash("success", "Listing Updated!");
+  res.redirect(`/listings/${id}`);
 };
 
 module.exports.deleteList=async (req,res)=>{

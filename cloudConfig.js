@@ -1,20 +1,22 @@
-const cloudinary = require('cloudinary').v2;
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinary = require("cloudinary");
+const CloudinaryStorage = require("multer-storage-cloudinary");
 
-cloudinary.config({  //this is not given in the docs of npm but in cloudinary docs me yes given h!
-    cloud_name: process.env.CLOUD_NAME,  //this is how we access variables from .env file!!
+cloudinary.v2.config({
+    cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.CLOUD_API_KEY,
-    api_secret:process.env.CLOUD_API_SECRET
+    api_secret: process.env.CLOUD_API_SECRET
 })
-const storage = new CloudinaryStorage({  //to tell cloudinary pe konse folder pr jaakr save krna h!
+
+const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
       folder: 'wanderlust_dev',
-      allowedFormats: ["png","jpg","jpeg"],
+      allowedFormats: ["png", "jpg", "jpeg", "avif"],
     },
   });
 
-module.exports={
-    cloudinary,
+module.exports = {
+    cloudinary: cloudinary.v2,
     storage
+
 }
