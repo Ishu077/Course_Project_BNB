@@ -25,21 +25,26 @@ module.exports.addList = async (req, res, next) => {
 
   let list = req.body.list;
   
-  // Handle image
+  // Handle image - remove any empty image field from form
+  if (list.image !== undefined) {
+    delete list.image; // Remove the form field
+  }
+  
+  // Only set image if file was actually uploaded
   if (req.file) {
-    console.log(req.file);
+    console.log("File uploaded:", req.file);
     list.image = {
       filename: req.file.filename,
       url: req.file.path,
     };
-  } else if (list.image === '') {
-    delete list.image; // Use default from schema
   }
-  console.log(list);
+  // If no req.file, let mongoose use the schema defaults
+  
+  console.log("Final list object:", list);
   let newListing = new listing(list);
   newListing.owner = req.user._id;
   newListing.geometry = response.body.features[0].geometry;
-  console.log(newListing);
+  console.log("New listing with image:", newListing.image);
   await newListing.save();
   req.flash("success", "New Listing Created!");
   res.redirect("/listings");
